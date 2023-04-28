@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/authProviders";
+import Google from '../assets/google.png';
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
   console.log(signIn);
 
   const handleLogin = (event) => {
@@ -22,6 +23,15 @@ const Login = () => {
       .catch((error) => {
         console.error(error.message);
       });
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .catch((error) => console.error(error.message));
   };
 
   return (
@@ -71,6 +81,11 @@ const Login = () => {
                   <button className="btn btn-link ps-1">Register</button>
                 </Link>
               </p>
+            </div>
+            <div>
+              <button onClick={handleGoogleSignIn} className="btn bg-white border-2 border-slate-300 ">
+                <img className="h-1/2" src={Google} alt="" />
+              </button>
             </div>
           </form>
         </div>
